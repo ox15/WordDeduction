@@ -46,12 +46,15 @@ class Game(object):
             else:
                 print("You won! You guessed the word", self.word, "in", self.round+1, "tries.")
             sys.exit()
+            
+
+    def isWordValid(self, word):
+        if len(self.guess) != self.length and self.guess != "Q":
+            print("Word should be", self.length, "letters long, not", len(self.guess))
         else:
             self.placed()
             self.misplaced()
-
-
-
+            return True
 
 
     def placed(self):
@@ -81,7 +84,6 @@ class Game(object):
         else:
             print("Miss : None")
 
-
     def play(self):
         nextRound = True
         print("'Place' (placed) means the letters that you placed correctly")
@@ -95,33 +97,20 @@ class Game(object):
         print("Word :", self.word)
         try:
             tries=int(input("How many tries do you want? (10) "))
-            if tries=1: tries=2
-        except:
+            if tries==1: tries=2
+        except ValueError:
             tries=10
         for self.round in range(tries):
             
             print("Round", self.round+1)
-            try:
-                self.guess=input("Guess: ").upper()
-            except UnboundLocalError:
-                print("Please enter a guess.")
-            except IndexError:
-                print("Your guess", self.guess, "has", str(len(self.guess)), "letters, not", str(self.length)+"!")
-                nextRound=False
-            except:
-                print("Something weird just happened. Let's try this again.")
-            else:
-                print("Everything is ok. won?")
-                self.won()
-                
-            finally:
-                print("Cleanup time! Did we win?")
-              
-                if nextRound==False:
-                    self.round -= 1
-                if self.guess=="Q":
-                    print("The word was", self.word)
-                    break
+            self.guess=input("Guess: ").upper()
+            self.isWordValid(self.guess)
+            self.won()
+            if nextRound==False:
+                self.round -= 1
+            if self.guess=="Q":
+                print("The word was", self.word)
+                break
                 
             
             
