@@ -71,7 +71,6 @@ class Game(object):
             print("Place:", numPlaced, "("+self.placedLetters+")")
         else:
             print("Place: None")
-        return i
 
     def misplaced(self):
         """Check if we misplaced any letters."""
@@ -103,14 +102,15 @@ class Game(object):
         for self.round in range(tries):
             
             print("Round", self.round+1)
-            self.guess=input("Guess: ").upper()
-            self.isWordValid(self.guess)
-            self.won()
-            if nextRound==False:
-                self.round -= 1
-            if self.guess=="Q":
-                print("The word was", self.word)
-                break
+            while True:
+                self.guess=input("Guess: ").upper()
+                self.isWordValid(self.guess)
+                self.won()
+                if nextRound==False:
+                    self.round -= 1
+                if self.guess=="Q":
+                    print("The word was", self.word)
+                    break
                 
             
             
