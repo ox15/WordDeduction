@@ -19,20 +19,22 @@ class Game(object):
                     break
             except FileNotFoundError:
                 print("I can\'t find any file named "+WORDLIST_FILENAME+" in "+os.getcwd())
-                WORDLIST_FILENAME = input("Please tell me the path and name of the file relative to "+os.getcwd()+": ")
+                WORDLIST_FILENAME = input("Please tell me the path \
+                and name of the file relative to "+os.getcwd()+": ")
             i += 1
         inFile = open(WORDLIST_FILENAME, 'r')
         # self.wordList: list of strings
         self.wordList = []
         for line in inFile:
-            if len(line)==self.length+1: # Go through the list and pull out all 3-letter words
+            if len(line) == self.length+1: # Go through the list and pull out all 3-letter words
                 self.wordList.append(line.strip())
         #try:
-        print(str(len(self.wordList)), str(self.length)+"-letter words loaded from", WORDLIST_FILENAME)
+        print(str(len(self.wordList)), str(self.length)+"-letter words loaded from",
+              WORDLIST_FILENAME)
         #except:
         #    print("There are no "+str(self.length)+"-letter words on the list!")
         # Uncomment this to choose a random word
-        self.word = self.wordList[random.randint(0,len(self.wordList))]
+        self.word = self.wordList[random.randint(0, len(self.wordList))]
         #self.word = "TREE"
 
     def playAgain(self):
@@ -42,11 +44,11 @@ class Game(object):
                 self.play()
             else:
                 print("Goodbye")
-                time.sleep(3)
+                time.sleep(1)
                 sys.exit()
         except ValueError:
             print("Goodbye")
-            time.sleep(3)
+            time.sleep(1)
             sys.exit()
 
 
@@ -55,12 +57,13 @@ class Game(object):
         """Check if we won."""
 
         if self.guess == self.word:
-            if self.round==0:
-                print("You won! You guessed the word", self.word, "on the first try!")
+            if self.round == 0:
+                print("You won! You guessed the word", self.word,
+                "on the first try!")
             else:
-                print("You won! You guessed the word", self.word, "in", self.round+1, "tries.")
+                print("You won! You guessed the word", self.word,
+                "in", self.round+1, "tries.")
             self.playAgain()
-            
 
     def isWordValid(self):
         if self.guess == "Q":
@@ -98,15 +101,16 @@ class Game(object):
             if letter in self.word and letter not in self.placedLetters:
                 self.misplacedLetters += letter
         if len(self.misplacedLetters) != 0:
-            print("Miss :", str(len(self.misplacedLetters)), "("+self.misplacedLetters+")")
+            print("Miss :", str(len(self.misplacedLetters)),
+            "("+self.misplacedLetters+")")
         else:
             print("Miss : None")
-            
+
     def play(self):
         try:
             self.length = int(input("How many letters in the word? (3) "))
         except ValueError:
-            self.length=3
+            self.length = 3
         self.loadWords()
         print("Word :", self.word)
         try:
@@ -125,7 +129,8 @@ class Game(object):
 
     def setup(self):
         print("'Place' (placed) means the letters that you placed correctly")
-        print("'Miss' (missed) means letters that you placed in the wrong spots, but are still in the word")
+        print("'Miss' (missed) means letters that you placed in the wrong \
+spots, but are still in the word")
         print("Enter 'Q' as your guess to exit")
         # end of setup
         self.play()
@@ -135,7 +140,7 @@ class Game(object):
             
         # If we didn't win (exited the loop) we lost
         
-
+    
 
 if __name__ == '__main__':
     g = Game()
